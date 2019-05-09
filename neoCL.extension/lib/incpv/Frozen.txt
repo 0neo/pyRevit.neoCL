@@ -1,0 +1,2 @@
+Frozen script.
+Waiting for a way to open transaction as modeless.

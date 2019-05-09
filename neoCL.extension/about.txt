@@ -1,0 +1,24 @@
+________________________________________________________________________________________________________________________________
+neoCL | neo Command Line _______________________________________________________________________________________________________
+
+neoCL is the name of the core tool (neo Command Line) and also the name of the full tools package.
+It inherits the concept of the much bigger neoCL which is a parallel CL for AutoCAD (not distributed).
+
+neoCL is a set of tools to use as a pyRevit extension.
+It's a command line to call neoCL scripts with commands instead of buttons.
+In the future it will give access to scripts or options that are not in the ribbon.
+
+Tip: Makes more sense to call neoCL with shortcut keys (SHIFT+N, just my personal preference).
+     File -> Options -> User Interface -> Keyboard Shortcuts: Customize...
+
+Keep neoCL updated:
+     pyRevit tab -> pyRevit panel -> Settings -> Core Settings -> Check updates at startup
+
+http:\\site.net
+________________________________________________________________________________________________________________________________
+Disclaimer :
+. Use the neoCL at your own risk. I'm not responsible for anything you do with it, or for any damage that comes out of using it.
+
+Used icons found on internet.
+https://www.flaticon.com/
+________________________________________________________________________________________________________________________________
