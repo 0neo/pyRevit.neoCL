@@ -15,6 +15,7 @@ rt = xli.rt 	#Title row
 #ct = xli.ct 	#First Column Title
 re = xli.re		#First element row
 ce = xli.ce		#First Column Element
+shName = "neoCL | iParameters Editor"
 ### ###### ############################
 
 def GetWb():
@@ -28,10 +29,12 @@ def GetWb():
 	XL, wb = ap.getApp(False, objpath, True)
 	return XL, wb
 
+
 def ImportXl():
 	with db.Transaction('neoCL | Import from iParameters Editor'):
 		XL, wb = GetWb()
-		sh = wb.ActiveSheet
+		sh = wb.Worksheets(shName)
+		sh.Activate
 		ImportMain(sh)
 		wb.Save
 		wb.Close
@@ -67,19 +70,20 @@ def ImportThisRow(r, sh):
 		rpv = rp.Text
 		if rpv:
 			rpN = sh.Range[rg(ri, ci)]
-			rpNv = rpN.Value2
+			rpNvTxt = rpN.Text
+			rpNvVal = rpN.Value2
 			try:		
 				pm = eq.parameters[rpv]
 				try:
 					if pm.type is str:
-						pm._revit_object.Set(str(rpNv))
+						pm._revit_object.Set(str(rpNvTxt))
 					elif pm.type is int:
-						pm._revit_object.Set(int(rpNv))
+						pm._revit_object.Set(int(rpNvVal))
 					elif pm.type is float:
-						pm._revit_object.SetValueString(str(rpNv))
+						pm._revit_object.SetValueString(str(rpNvVal))
 					else:
 						#if rpNv != pm.AsValueString(): #avoid mess with non modified parameters
-						pm._revit_object.SetValueString(rpNv)
+						pm._revit_object.SetValueString(rpNvTxt)
 				except:
 					print("-> Can't set this parameter: " + rpv)
 			except:

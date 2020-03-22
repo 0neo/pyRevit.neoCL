@@ -13,9 +13,9 @@ re = rt + 1	#First element row
 ce = ct		#First Column Element
 ### ###### ###########################
 
-def Export():
+def Export(presetParams):
 	import neo_xl_selected_instances_export as exp
-	exp.ExportXL()
+	exp.ExportXL(presetParams)
 
 def Import():
 	import neo_xl_selected_instances_import as imp

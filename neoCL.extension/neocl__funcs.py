@@ -8,7 +8,7 @@ import rpw
 import neocl
 from rpw.ui.forms import Alert
 from shutil import copyfile
-from time import gmtime, strftime
+from time import gmtime, strftime, sleep
 
 def ShowFile(file, _Print=False, _Alert=True):
     import os.path
@@ -33,7 +33,6 @@ def neoCLFolderPath():
     return npath
 
 def CreateFolder(folderPath):
-
 	if not os.path.exists(folderPath):
 		try:
 			os.makedirs(folderPath)
@@ -45,7 +44,6 @@ def CreateFolder(folderPath):
 		return True
 
 def CreateFile(content, fullFileName):
-
 	try:
 		thisFile = open(fullFileName, "w")
 		thisFile.write(content)
@@ -55,7 +53,6 @@ def CreateFile(content, fullFileName):
 		return False
 
 def neoCLRevitDocFolder():
-
 	folderPath = os.path.expanduser(r'~\Documents')
 	folderPath = os.path.join(folderPath, "neoCL.Revit", '')
 
@@ -63,9 +60,12 @@ def neoCLRevitDocFolder():
 		return folderPath
 	else:
 		return False
-
+	
 def GenerateDateTimeCode():
     return strftime("%Y%m%d%H%M%S", gmtime())
+
+def GenerateUniqueDateFolder():
+    return strftime("%Y-%m-%d - (%H%M%S)", gmtime())
 
 def OpenExplorer(path):
 	subprocess.call("explorer " + path, shell=True)
@@ -92,48 +92,3 @@ def CreateFileInDocFolder(content, fileName, extension='.txt', addCode=True):
 	result.append(CreateFile(content, filePath))
 
 	return result
-
-def BackupUserFiles():
-    
-	bakFolderPath = UserBackupFolder()
-	mainFolder = neoCLFolderPath()
-
-	files = [
-                [os.path.join('lib', 'find', ''), 'neo_findreplace_config.ini'],
-                [os.path.join('lib', 'xl', ''), 'neoCL.FamilyReplacer.xlsm'],
-                [os.path.join('lib', 'xl', ''), 'neoCL.iParametersEditor.xlsm']
-            ]
-
-	if bakFolderPath:
-		try:
-			for file in files:
-				src = mainFolder + file[0] + file[1]
-				dst = bakFolderPath + file[1]
-				copyfile(src, dst)
-			return True
-		except:
-			return False
-	else:
-		return False
-
-def BackupMyUserFiles():
-    
-	if BackupUserFiles():
-		OpenExplorer(UserBackupFolder())
-		mg = "User files backed up to :\n" + str(UserBackupFolder())
-	else:
-		mg = "Error while backing up user files to to :\n" + str(UserBackupFolder())
-		
-	neoAlert(mg, 'neoCL', header='Backup User Files', exit=False)
-
-def UserBackupFolder():
-
-	docPath = neoCLRevitDocFolder()
-	if not docPath: return False
-
-	bakFolderPath = os.path.join(docPath, '_backupUserData', '')
-
-	if CreateFolder(bakFolderPath):
-		return bakFolderPath
-	else:
-		return False

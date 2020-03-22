@@ -18,9 +18,10 @@ g.allcmds = GetAllcmdlist()
 #g.allcmds = GenerateFalsecmdstr(g.allcmds, 999)
 g.allcmds = collections.OrderedDict(sorted(g.allcmds.items()))
 
-def Setup(FirstRun=False):
+def Setup(FirstRun=False, setCMD=''):
     if g.isred: easternneocl('myneoclisred')
     if g.fm.isFindMode: FindMode(FirstRun)
+    if setCMD: g.fm._comboBoxCmds.Text = setCMD  
     #i.UpdateListBox(True)
 
 def Resize(firstRun=False):
@@ -91,21 +92,23 @@ def runcmdneoCL(cmd):
         #g.fm.TopMost = False
         g.fm.Dispose()
         runcmd(cmd, 'neoCL Form', False)
-        if CanRecallneoCL(cmd):
-            g.fm.ShowMe(modal, not modal)
+        if g.op_recallneocl:
+            if CanRecallneoCL(cmd):
+                g.fm.ShowMe(modal, not modal)
+                #g.fm.ShowMe(modal, not modal, '?')
 
-def ShowneoCL(isModal=False, isModeless=False, isFindMode=False):
+def ShowneoCL(isModal=False, isModeless=False, isFindMode=False, setCMD=''):
     ForceMode = isModal or isModeless
     g.fm.Dispose()
     if isModal or (not ForceMode and g.fm.modal):
         g.fm = neocl__main.Formneocl(True)
         g.fm.isFindMode = isFindMode
-        Setup(False)
+        Setup(False, setCMD)
         g.fm.ShowDialog()
     elif isModeless or (not ForceMode and not g.fm.modal):
         g.fm = neocl__main.Formneocl(False)
         g.fm.isFindMode = isFindMode
-        Setup(False)
+        Setup(False, setCMD)
         g.fm.Show()
 
 def FindMode(FirstRun=False):
@@ -118,7 +121,7 @@ def FindMode(FirstRun=False):
     g.fm._labelneoCL.ForeColor = forc
     g.fm._comboBoxCmds.Text = 'Search in description mode:'
     g.fm.nouserinput = True
-    
+
 # E.Egg ### ################################################
 def easternneocl(usercmd, FirstRun=False):
     

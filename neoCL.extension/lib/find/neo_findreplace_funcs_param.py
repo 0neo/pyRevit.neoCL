@@ -108,37 +108,44 @@ class param:
 
 		done = False
 
-		if self.pm.Definition.Name == "Family":
-		    self.el.get_family().name = self.newpval
-		    if self.el.get_family().name == self.newpval: done = True
+		try:
+			if self.pm.Definition.Name == "Family":
+				self.el.get_family().name = self.newpval
+				if self.el.get_family().name == self.newpval: done = True
 
-		elif self.pm.Definition.Name == "Type" or self.pm.Definition.Name == "Type Name":
-		    self.el.get_symbol().name = self.newpval
-		    if self.el.get_symbol().name == self.newpval: done = True
+			elif self.pm.Definition.Name == "Type" or self.pm.Definition.Name == "Type Name":
+				self.el.get_symbol().name = self.newpval
+				if self.el.get_symbol().name == self.newpval: done = True
 
-		elif self.iamTextNote:
-		    self.el.Text = self.newpval
-		    if self.el.Text == self.newpval: done = True
+			elif self.iamTextNote:
+				self.el.Text = self.newpval
+				if self.el.Text == self.newpval: done = True
 
-		elif self.pm.type is str:
-		    self.pm._revit_object.Set(str(self.newpval))
-		    if self.pm.AsString() == self.newpval: done = True
+			elif self.pm.type is str:
+				if self.pm._revit_object.Set(str(self.newpval)): done = True
+				#self.pm._revit_object.Set(str(self.newpval))
+				#if self.pm.AsString() == self.newpval: done = True
 
-		elif self.pm.type is int:
-		    self.pm._revit_object.Set(int(self.newpval))
-		    if self.pm.value == self.newpval: done = True
+			elif self.pm.type is int:
+				if self.pm._revit_object.Set(int(self.newpval)): done = True
+				#self.pm._revit_object.Set(int(self.newpval))
+				#if self.pm.value == self.newpval: done = True
 
-		elif self.pm.type is float:
-		    self.pm._revit_object.SetValueString(str(self.newpval))
-		    if self.pm.value * 304.8 == self.newpval: done = True
+			elif self.pm.type is float:
+				if self.pm._revit_object.SetValueString(str(self.newpval)): done = True
+				#self.pm._revit_object.SetValueString(str(self.newpval))
+				#if self.pm.value * 304.8 == self.newpval: done = True
 
-		else:
-		    self.pm._revit_object.SetValueString(str(self.newpval))
-		    if self.pm.AsValueString() == self.newpval: done = True
-		
-		if  done and str(self.pval) != str(self.newpval):
-			self.lvItem.SubItems[0].Text = self.newpval
-			self.pval = self.newpval  
-			return True
-		else:
+			else:
+				if self.pm._revit_object.SetValueString(str(self.newpval)): done = True
+				#self.pm._revit_object.SetValueString(str(self.newpval))
+				#if self.pm.AsValueString() == self.newpval: done = True
+
+			if  done and str(self.pval) != str(self.newpval):
+				self.lvItem.SubItems[0].Text = self.newpval
+				self.pval = self.newpval
+				return True
+			else:
+				return False
+		except:
 			return False

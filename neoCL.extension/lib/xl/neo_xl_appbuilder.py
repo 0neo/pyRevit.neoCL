@@ -13,20 +13,21 @@ def getApp(createApp, filepath="", cancelbringtofront=False, canceladdwb=False):
         import System
         try:
             XL = System.Runtime.InteropServices.Marshal.GetActiveObject('Excel.Application')
+            XL.Visible = True
         except:
             XL, wp = getApp(True, filepath, cancelbringtofront, canceladdwb)
+            XL.Visible = True
+            if not cancelbringtofront:
+                BringExcelToFront(XL)
             return XL, wp
 
     #print XL.Caption
 
-    if filepath and not canceladdwb:     
-        #print("is path!")   
+    if filepath and not canceladdwb:    
         import os.path 
-        #print("is path!!!")   
         try:
             wpname = os.path.basename(filepath)
             wp = XL.Workbooks(wpname)
-            #print(wpname)  
         except:
             #print("wp is not open!")
             if os.path.isfile(filepath):
@@ -49,17 +50,20 @@ def getApp(createApp, filepath="", cancelbringtofront=False, canceladdwb=False):
     elif not canceladdwb:
         wp = XL.Workbooks.Add()
 
-    if not cancelbringtofront:
-        try:
-            XL.WindowState = -4140
-            XL.WindowState = -4137
-        except:
-            print("ERROR [neoCL] : Can't bring Excel to front!")
-
     try:
         sh = wp.ActiveSheet
     except:
         print("ERROR [neoCL] : No work!")
         wp = XL.ActiveWorkbook
 
+    if not cancelbringtofront:
+        BringExcelToFront(XL)
+
     return XL, wp
+
+def BringExcelToFront(XL):
+    try:
+        XL.WindowState = -4140
+        XL.WindowState = -4137
+    except:
+        print("ERROR [neoCL] : Can't bring Excel to front!")

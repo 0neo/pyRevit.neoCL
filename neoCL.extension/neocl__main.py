@@ -42,6 +42,8 @@ class Formneocl(Form):
         self._panelBorder.Name = "panelBorder"
         self._panelBorder.Size = System.Drawing.Size(self.iWidth, self.iHeight)
         self._panelBorder.TabIndex = 2
+        #self._panelBorder.MouseLeave += self._MouseLeave
+        #self._panelBorder.MouseEnter += self._MouseEnter
         self._panelBorder.MouseDown += self._MouseDown
         self._panelBorder.MouseMove += self._MouseMove
         self._panelBorder.MouseUp += self._MouseUp
@@ -63,6 +65,7 @@ class Formneocl(Form):
         self._comboBoxCmds.Text = "neoCL"    
         self._comboBoxCmds.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None
         self._comboBoxCmds.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None
+        #self._comboBoxCmds.MouseEnter += self._MouseEnter
         self._comboBoxCmds.MouseDown += self._MouseDown
         self._comboBoxCmds.MouseMove += self._MouseMove
         self._comboBoxCmds.MouseUp += self._MouseUp
@@ -85,6 +88,7 @@ class Formneocl(Form):
         self._labelneoCL.Text = "neoCL"
         self._labelneoCL.Size = System.Drawing.Size(38, 14)
         self._labelneoCL.TabIndex = 3
+        #self._labelneoCL.MouseEnter += self._MouseEnter
         self._labelneoCL.MouseDown += self._MouseDown
         self._labelneoCL.MouseMove += self._MouseMove
         self._labelneoCL.MouseUp += self._MouseUp
@@ -101,6 +105,7 @@ class Formneocl(Form):
         self._listBoxCmds.MaximumSize = System.Drawing.Size(0, 300)
         self._listBoxCmds.TabIndex = 1
         self._listBoxCmds.IntegralHeight = False
+        #self._listBoxCmds.MouseEnter += self._MouseEnter
         self._listBoxCmds.MouseDown += self._MouseDown
         self._listBoxCmds.MouseMove += self._MouseMove
         self._listBoxCmds.MouseUp += self._MouseUp
@@ -126,6 +131,8 @@ class Formneocl(Form):
         self.Controls.Add(self._panelBorder)
         #self.ForeColor = System.Drawing.SystemColors.Highlight
         self.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
+        #self.MouseEnter += self._MouseEnter
+        #self.MouseLeave += self._MouseLeave
         self.MouseDown += self._MouseDown
         self.MouseMove += self._MouseMove
         self.MouseUp += self._MouseUp
@@ -141,22 +148,41 @@ class Formneocl(Form):
         self._labelneoCL.Location = System.Drawing.Point(self._comboBoxCmds.Width - 55, 5)
         self._labelneoCL.Visible = True
 
-    def ShowMe(self, isModal=False, isModeless=False):
-        s.ShowneoCL(isModal, isModeless, self.isFindMode)
+    def ShowMe(self, isModal=False, isModeless=False, setCMD=''):
+        s.ShowneoCL(isModal, isModeless, self.isFindMode, setCMD)
+        #self.LockCursor()
+
+    #def _MouseEnter(self, sender, e):
+    #    self_MouseUp(sender, e)
+    #    self.UnlockCursor()
+
+    #def _MouseLeave(self, sender, e):
+    #    self._MouseDown(sender, e)
+    #    self.LockCursor()
+
+    #def LockCursor(self):
+    #    Cursor.Clip = self.Bounds
+
+    #def UnlockCursor(self):
+    #    Cursor.Clip = Rectangle.Empty
 
     def _MouseDown(self, sender, e):
         self.mouseDown = True
         self.lastLocation = e.Location
+        #self.UnlockCursor()
 
     def _MouseMove(self, sender, e):
         if self.mouseDown:
+            #self.UnlockCursor()
             self.Location = Point(
                 (self.Location.X - self.lastLocation.X) + e.X,
                 (self.Location.Y - self.lastLocation.Y) + e.Y)
             self.Update()
+        #self.LockCursor()
 
     def _MouseUp(self, sender, e):
         self.mouseDown = False
+        #self._MouseEnter(sender, e)
 
     def GotoMouse(self):
         self.Location = Point(Cursor.Position.X, Cursor.Position.Y)
@@ -284,5 +310,5 @@ class Formneocl(Form):
 def Main(isModal=True, isFindMode=False):
     g.fm = Formneocl(isModal)
     g.fm.isFindMode = isFindMode
-    s.Setup()
+    s.Setup(True)
     g.fm.ShowMe()

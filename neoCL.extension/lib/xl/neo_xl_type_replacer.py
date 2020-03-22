@@ -24,6 +24,7 @@ rt2 = rt1 + 1 	#Title row 2
 ct = 1 	        #First Column Title
 re = rt2 + 1	#First element row
 ce = ct 		#First Column Element
+shName = "RUN"
 ### ###### ############################
 
 def GetWb():
@@ -40,15 +41,17 @@ def GetWb():
 def ImportXl(where="Project"):
 	with db.TransactionGroup('neoCL | Import Family Replacer'):
 		XL, wb = GetWb()
-		sh = wb.Worksheets("RUN")
+		XL.DisplayAlerts = False
+		sh = wb.Worksheets(shName)
 		ImportMain(sh, where)
-            
+		XL.DisplayAlerts = True
+
 def ImportMain(sh, where):
 
     ri = re
     ci = ce
     atLeastOneImport = False
-        
+
     log = sh.Range[rg(ri - 1, ci + 4)]
     ClearColumnFrom(log.Offset(1, 0))
     log.Value2 = time.ctime() + " | " + doc.PathName

@@ -17,7 +17,6 @@ class Form1(Form):
 	
 	def InitializeComponent(self):
 		self._pictureBox = System.Windows.Forms.PictureBox()
-		self._label = System.Windows.Forms.Label()
 		self._pictureBox.BeginInit()
 		self.SuspendLayout()
 		# 
@@ -27,9 +26,10 @@ class Form1(Form):
 		self._pictureBox.Location = System.Drawing.Point(1, -1)
 		self._pictureBox.Name = "pictureBox"
 		self._pictureBox.Size = System.Drawing.Size(800, 400)
-		self._pictureBox.TabIndex = 1
+		self._pictureBox.TabIndex = 2
 		self._pictureBox.TabStop = False
-		self._pictureBox.Click += self._Click
+		self._pictureBox.Cursor = Cursors.Hand
+		self._pictureBox.Click += self._OpenLink
 		# 
 		# Form
 		# 
@@ -46,13 +46,17 @@ class Form1(Form):
 		self.TopMost = True
 		self.ResumeLayout(False)
 		self.KeyDown += self._KeyDown
-		self.Click += self._Click
 
 	def _KeyDown(self, sender, e):
 		if e.KeyCode == Keys.Escape:
 			self.Close()
 
-	def _Click(self, sender, e):
+	#def _Click(self, sender, e):
+	#    self.Close()
+
+	def _OpenLink(self, sender, e):
+	    from neocl import runcmd
+	    runcmd("@", msg="", recallCL=False)
 	    self.Close()
 
 def Main():

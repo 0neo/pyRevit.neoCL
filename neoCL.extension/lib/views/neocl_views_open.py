@@ -7,7 +7,7 @@ from neocl__funcs import neoAlert
 
 from rpw import uidoc, ui, db
 
-def OpenView(viewid, viewname=''):
+def OpenView(viewid='', viewname=''):
 	col = db.Collector(of_class='View')
 	for view in col:
 		if view.Id == viewid or \
@@ -20,7 +20,7 @@ def OpenView(viewid, viewname=''):
 def OpenSelectedViews():
 
     # Future Upgrade : Find a way to activate Project browser before running...
-    #OpenView('', "Project View")
+    # OpenView('', "Project View")
 
     views = []
 

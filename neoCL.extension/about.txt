@@ -1,20 +1,18 @@
 ________________________________________________________________________________________________________________________________
 neoCL | neo Command Line _______________________________________________________________________________________________________
 
-neoCL is the name of the core tool (neo Command Line) and also the name of the full tools package.
-It inherits the concept of the much bigger neoCL which is a parallel CL for AutoCAD (not distributed).
+An extension for pyRevit in Autodesk Revit.
 
-neoCL is a set of tools to use as a pyRevit extension.
-It's a command line to call neoCL scripts with commands instead of buttons.
-In the future it will give access to scripts or options that are not in the ribbon.
+A set of tools, mainly to process data, but also other type of tools.
+Evely Excel dependent to speed up data process.
 
-Tip: Makes more sense to call neoCL with shortcut keys (SHIFT+N, just my personal preference).
-     File -> Options -> User Interface -> Keyboard Shortcuts: Customize...
+There is a core tool, that gives the name to the package (neo Command Line), it can call the scripts with commands instead of buttons and it gives access to more scripts or options that are not in the ribbon.
 
-Keep neoCL updated:
-     pyRevit tab -> pyRevit panel -> Settings -> Core Settings -> Check updates at startup
+Tip: Makes more sense to call neoCL with shortcut keys.
+	(SHIFT+N, just my personal preference)
+     	File -> Options -> User Interface -> Keyboard Shortcuts: Customize...
 
-http:\\site.net
+Check for updates in https://github.com/0neo/neoCL
 ________________________________________________________________________________________________________________________________
 Disclaimer :
 . Use the neoCL at your own risk. I'm not responsible for anything you do with it, or for any damage that comes out of using it.
