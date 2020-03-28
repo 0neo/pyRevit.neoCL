@@ -98,8 +98,11 @@ class param:
 
 	def ReplaceMe(self):
 		
-		if self.iamRoomTag or \
-           self.pm._revit_object.IsReadOnly:
+		if self.iamTextNote:
+			pass # has no pm, avoid error : self.pm._revit_object.IsReadOnly
+		elif self.iamRoomTag:
+			return False
+		elif self.pm._revit_object.IsReadOnly:
 			return False
 
 		import re
@@ -109,17 +112,17 @@ class param:
 		done = False
 
 		try:
-			if self.pm.Definition.Name == "Family":
+			if self.iamTextNote:
+				self.el.Text = self.newpval
+				if self.el.Text == self.newpval: done = True
+
+			elif self.pm.Definition.Name == "Family":
 				self.el.get_family().name = self.newpval
 				if self.el.get_family().name == self.newpval: done = True
 
 			elif self.pm.Definition.Name == "Type" or self.pm.Definition.Name == "Type Name":
 				self.el.get_symbol().name = self.newpval
 				if self.el.get_symbol().name == self.newpval: done = True
-
-			elif self.iamTextNote:
-				self.el.Text = self.newpval
-				if self.el.Text == self.newpval: done = True
 
 			elif self.pm.type is str:
 				if self.pm._revit_object.Set(str(self.newpval)): done = True
