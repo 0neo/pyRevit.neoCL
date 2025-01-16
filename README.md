@@ -3,7 +3,7 @@
 **An extension for pyRevit in Autodesk Revit.**
 
 A set of tools, mainly to process data, but also other type of tools.
-Evely Excel dependent to speed up data process.
+Heavily Excel dependent to speed up data process.
 
 There is a core tool, that gives the name to the package (neo Command Line), it can call the scripts with commands instead of buttons and it gives access to more scripts or options that are not in the ribbon.
 
